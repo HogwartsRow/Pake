@@ -41,6 +41,14 @@ window.addEventListener('DOMContentLoaded', (_event) => {
       display: none !important;
     }
 
+    #__next header.HeaderBar_header__jn5ju{
+      padding-top: 16px;
+    }
+
+    #__next .ChatPageSidebar_menuFooter__E1KTY,#__next > div.PageWithSidebarLayout_centeringDiv___L9br > div > aside > div > menu > section:nth-child(6) {
+      display: none;
+    }
+
     #page .main_header, .cb-layout-basic--navbar,
     #app .splitpanes.splitpanes--horizontal.no-splitter header,
     .fui-FluentProvider .fui-Button[data-testid="HomeButton"],
@@ -55,6 +63,11 @@ window.addEventListener('DOMContentLoaded', (_event) => {
 
     #__next > div.PageWithSidebarLayout_centeringDiv___L9br > aside{
       min-width: 260px;
+    }
+
+    #__next > div.overflow-hidden.w-full.h-full.relative.flex.z-0 > div.relative.flex.h-full.max-w-full.flex-1.overflow-hidden > div > main > div.absolute.left-2.top-2.z-10.hidden.md\\:inline-block{
+      margin-top:20px;
+      margin-left: 10px;
     }
 
     .chakra-ui-light #app .chakra-heading,
@@ -82,6 +95,19 @@ window.addEventListener('DOMContentLoaded', (_event) => {
 
     #__next > div.overflow-hidden.w-full.h-full.relative.flex > div.dark.hidden.flex-shrink-0.bg-gray-900.md\\:flex.md\\:w-\\[260px\\].md\\:flex-col > div > div > nav {
       width: 100%;
+    }
+
+    #tabs-sidebar--tabpanel-0 > div.tw-flex.tw-items-center.tw-mb-\\[12px\\].tw-mt-\\[14px\\].tw-px-4 {
+      padding-top: 15px;
+    }
+
+    #tabs-sidebar--tabpanel-1 > div > div.tw-p-\\[16px\\].tw-flex.tw-flex-col.tw-gap-1\\.5{
+      padding-top: 30px;
+    }
+
+    #tabs-sidebar--tabpanel-2 > div > h2 {
+      padding-top: 20px;
+      height: 70px;
     }
 
     .lark > .dashboard-sidebar, .lark > .dashboard-sidebar > .sidebar-user-info , .lark > .dashboard-sidebar .index-module_wrapper_F-Wbq{
@@ -135,10 +161,12 @@ window.addEventListener('DOMContentLoaded', (_event) => {
       margin-top:24px;
     }
 
+
     #react-root [data-testid="placementTracking"] article,
     #react-root a[href*="quick_promote_web"],
     #react-root [data-testid="AppTabBar_Explore_Link"],
     #react-root a[href*="/lists"][role="link"][aria-label],
+    #react-root a[href*="/i/communitynotes"][role="link"][aria-label],
     #react-root a[href*="/i/verified-orgs-signup"][role="link"][aria-label] {
       display: none !important;
     }

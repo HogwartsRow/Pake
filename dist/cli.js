@@ -9,6 +9,7 @@ import path from 'path';
 import fs$1 from 'fs/promises';
 import fs2 from 'fs-extra';
 import chalk from 'chalk';
+import URL from 'node:url';
 import crypto from 'crypto';
 import axios from 'axios';
 import { fileTypeFromBuffer } from 'file-type';
@@ -34,8 +35,6 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-/* global Reflect, Promise */
-
 
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1641,6 +1640,10 @@ function promptText(message, initial) {
         return response.content;
     });
 }
+function setSecurityConfigWithUrl(tauriConfig, url) {
+    const { hostname } = URL.parse(url);
+    tauriConfig.tauri.security.dangerousRemoteDomainIpcAccess[0].domain = hostname;
+}
 function mergeTauriConfig(url, options, tauriConf) {
     return __awaiter(this, void 0, void 0, function* () {
         const { width, height, fullscreen, transparent, resizable, userAgent, showMenu, showSystemTray, systemTrayIcon, iterCopyFile, identifier, name, } = options;
@@ -1697,9 +1700,9 @@ function mergeTauriConfig(url, options, tauriConf) {
                 const cli_path = path.join(new_dir, "cli.js");
                 const cli_path_target = path.join(old_dir, "cli.js");
                 const about_pake_path = path.join(new_dir, "about_pake.html");
-                const about_patk_path_target = path.join(old_dir, "about_pake.html");
+                const about_pake_path_target = path.join(old_dir, "about_pake.html");
                 fs$1.copyFile(cli_path, cli_path_target);
-                fs$1.copyFile(about_pake_path, about_patk_path_target);
+                fs$1.copyFile(about_pake_path, about_pake_path_target);
             }
             tauriConf.pake.windows[0].url = file_name;
             tauriConf.pake.windows[0].url_type = "local";
@@ -1864,6 +1867,8 @@ function mergeTauriConfig(url, options, tauriConf) {
                 tauriConf.tauri.systemTray.iconPath = "png/icon_512.png";
             }
         }
+        // 设置安全调用 window.__TAURI__ 的安全域名为设置的应用域名
+        setSecurityConfigWithUrl(tauriConf, url);
         // 保存配置文件
         let configPath = "";
         switch (process.platform) {
@@ -2104,17 +2109,32 @@ function checkRustInstalled() {
 
 var tauri$3 = {
 	security: {
-		csp: null
+		csp: null,
+		dangerousRemoteDomainIpcAccess: [
+			{
+				domain: "weread.qq.com",
+				windows: [
+					"pake"
+				],
+				enableTauriAPI: true
+			}
+		]
 	},
 	updater: {
 		active: false
 	},
 	systemTray: {
-		iconPath: "png/weread_512.png",
+		iconPath: "png/icon_512.png",
 		iconAsTemplate: true
 	},
 	allowlist: {
-		all: true
+		all: true,
+		fs: {
+			all: true,
+			scope: [
+				"$DOWNLOAD/*"
+			]
+		}
 	}
 };
 var build = {
@@ -2525,7 +2545,7 @@ class BuilderFactory {
 }
 
 var name = "pake-cli";
-var version = "2.0.5";
+var version = "2.0.6";
 var description = "🤱🏻 Turn any webpage into a desktop app with Rust. 🤱🏻 很简单的用 Rust 打包网页生成很小的桌面 App。";
 var engines = {
 	node: ">=16.0.0"
